@@ -747,7 +747,7 @@ footer {
             </div>
             <p class="cta-tier-note">ClawAgent: single agent, 5 min setup &middot; ClawFactory: full security substrate, Studio management app, kill switch</p>
             <div class="hero-meta">
-                <span>Windows 10/11</span> &nbsp;&middot;&nbsp; <span>One-time purchase</span>
+                <span>Windows 10/11</span> &nbsp;&middot;&nbsp; <span>Free and open source</span>
             </div>
         </div>
         <div class="hero-mascot" aria-hidden="true">
@@ -813,6 +813,18 @@ footer {
                     <td class="control-name">Kill Switch</td>
                     <td class="control-desc">One-click shutdown from Start Menu</td>
                 </tr>
+                <tr>
+                    <td class="control-name">Web access denied by default</td>
+                    <td class="control-desc">Your agent can reach the AI provider, the software sources ClawFactory needs, and the network addresses of the sites you have allowed. Nothing else. Matching is by network address rather than by site name.</td>
+                </tr>
+                <tr>
+                    <td class="control-name">Approval-gated email</td>
+                    <td class="control-desc">Your agent can write an email. It cannot send one. Every message waits for you, and approving it sends exactly that message, once. This covers email. It is not a claim that no data can leave your machine, because your agent talks to a hosted AI model and anything it can read it can send there.</td>
+                </tr>
+                <tr>
+                    <td class="control-name">30-day recoverable delete</td>
+                    <td class="control-desc">When your agent deletes a file in a folder you granted it, the file is held for 30 days and you can put it back. This covers deletion by name, which is how deletion is ordinarily expressed; it does not cover every possible way a program can destroy a file.</td>
+                </tr>
             </tbody>
         </table>
     </div>
@@ -836,7 +848,7 @@ footer {
             <div class="step">
                 <div class="step-num">Step 03 / Run</div>
                 <div class="step-title">Run</div>
-                <div class="step-desc">Open <strong>ClawFactory Studio</strong> from the Start Menu &mdash; your agent runs locally. Nothing leaves your machine without your permission.</div>
+                <div class="step-desc">Open <strong>ClawFactory Studio</strong> from the Start Menu. The sandbox runs on your machine, and your agent reads only the folders you grant it. It still talks to the hosted AI model you chose, so anything it can read it can send there.</div>
             </div>
         </div>
     </div>
@@ -862,7 +874,7 @@ footer {
                     <span class="faq-chevron">&rsaquo;</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Your conversations are stored locally in <strong>%APPDATA%\ClawChat\conversations\</strong> on your Windows machine. The egress firewall blocks the open internet and permits outbound traffic only to an allowlist &mdash; your chosen AI provider's API (the call that generates each response) plus the update sources the runtime needs (for example GitHub, npm, and Ubuntu package mirrors). No telemetry, no analytics, no conversation logging to any server we control. The firewall enforces this at the network level, not just by policy.</div>
+                    <div class="faq-answer-inner">Your conversations are stored locally in <strong>%APPDATA%\ClawChat\conversations\</strong> on your Windows machine. The egress firewall blocks the open internet and permits outbound traffic only to an allowlist: your chosen AI provider's API (the call that generates each response) plus the update sources the runtime needs (for example GitHub, npm, and Ubuntu package mirrors). No telemetry, no analytics, no conversation logging to any server we control. The firewall enforces this at the network level, not just by policy. Two honest caveats: it matches on resolved network address rather than on site name, so anything co-hosted with an allowed address is reachable, and a DNS lookup still leaves the machine. Both are written up in full in SECURITY_FINDINGS.md in the repository.</div>
                 </div>
             </div>
 
@@ -872,7 +884,7 @@ footer {
                     <span class="faq-chevron">&rsaquo;</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Almost nothing outside its own sandbox. By default the agent runs inside WSL2 with automount disabled &mdash; your Windows filesystem (C: drive, Documents, Downloads, everything) is invisible to it. The egress firewall restricts outbound network calls to an allowlist &mdash; your AI provider's API and the update sources the runtime needs &mdash; not the open internet. It cannot read your files, access other applications, or make arbitrary internet requests.</div>
+                    <div class="faq-answer-inner">Almost nothing outside its own sandbox. By default the agent runs inside WSL2 with automount disabled, so your Windows filesystem (C: drive, Documents, Downloads, everything) is invisible to it. The egress firewall restricts outbound network calls to an allowlist (your AI provider's API and the update sources the runtime needs) rather than the open internet. It reads a Windows folder only when you grant that folder to it in Studio, and nothing else on your drives. It cannot access other applications, and it cannot make arbitrary internet requests.</div>
                 </div>
             </div>
 
@@ -922,7 +934,7 @@ footer {
                     <span class="faq-chevron">&rsaquo;</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Same security substrate &mdash; both include the WSL2 sandbox, egress firewall, DPAPI key storage, loopback-only gateway, and Kill Switch. The difference is scope: <strong>ClawFactory</strong> adds <strong>ClawFactory Studio</strong> &mdash; a visual workbench for managing setup and granting the agent access to specific project folders. <strong>ClawAgent</strong> is a single-agent install &mdash; faster setup, same security, designed for straightforward use cases.</div>
+                    <div class="faq-answer-inner"><strong>ClawFactory</strong> is the current product and the one that is maintained. <strong>ClawAgent</strong> is an earlier single-agent build from May 2026. It shares the original substrate (WSL2 sandbox, egress firewall, DPAPI key storage, loopback-only gateway, Kill Switch) but it does <em>not</em> have anything added since: the approval-gated email send, the 30-day recoverable delete, the web access panel, the chat gating proxy, or ClawFactory Studio. If you want the security story described on this page, install ClawFactory.</div>
                 </div>
             </div>
 
@@ -968,11 +980,11 @@ footer {
 
             <div class="faq-item">
                 <button class="faq-question" aria-expanded="false">
-                    <span>Is this a subscription?</span>
+                    <span>What does it cost?</span>
                     <span class="faq-chevron">&rsaquo;</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">No. ClawFactory is a one-time purchase. You pay once and own the installer permanently. Future major versions may be separate purchases. Updates within the current version (v1.x) are free.</div>
+                    <div class="faq-answer-inner">Nothing. ClawFactory is free and open source under the Apache License 2.0. There is no subscription, no licence key, and no account. You still pay your AI provider for the model calls your agent makes, that bill is between you and them, and ClawFactory installs a spend cap to help you bound it.</div>
                 </div>
             </div>
         </div>
@@ -982,24 +994,27 @@ footer {
 <section class="privacy">
     <div class="container">
         <h2 class="privacy-statement">A local AI runtime that doesn't phone home.</h2>
-        <p class="privacy-sub">No telemetry. No data collection. Nothing leaves your machine except the API calls you configure.</p>
+        <p class="privacy-sub">No telemetry, no analytics, no account, and no licence server. The one thing that does leave your machine is the call to the AI provider you chose, and it carries whatever your agent read in order to answer you.</p>
     </div>
 </section>
 
 <section id="products">
     <div class="container">
         <div class="section-label">Choose Your Product</div>
-        <p class="products-soon">One-time purchase. <span class="soon-badge">Launching soon.</span></p>
+        <p class="products-soon">Free and open source, Apache-2.0. <span class="soon-badge">Launching soon.</span></p>
         <div class="product-cards">
             <div class="product-card">
                 <div class="product-title">ClawAgent</div>
-                <div class="product-subtitle">Single agent runtime</div>
+                <div class="product-subtitle">Superseded. Last built May 2026, no longer maintained</div>
                 <ul class="feature-list">
                     <li class="feature-check">WSL2 sandbox</li>
                     <li class="feature-check">Egress firewall</li>
                     <li class="feature-check">Loopback gateway</li>
                     <li class="feature-check">DPAPI key storage</li>
                     <li class="feature-check">Kill Switch</li>
+                    <li class="feature-cross">Web access denied by default</li>
+                    <li class="feature-cross">Approval-gated email</li>
+                    <li class="feature-cross">30-day recoverable delete</li>
                     <li class="feature-cross">Studio management app</li>
                 </ul>
             </div>
@@ -1013,6 +1028,9 @@ footer {
                     <li class="feature-check">Loopback gateway</li>
                     <li class="feature-check">DPAPI key storage</li>
                     <li class="feature-check">Kill Switch</li>
+                    <li class="feature-check">Web access denied by default</li>
+                    <li class="feature-check">Approval-gated email</li>
+                    <li class="feature-check">30-day recoverable delete</li>
                     <li class="feature-check">Studio management app</li>
                 </ul>
             </div>
@@ -1024,7 +1042,7 @@ footer {
     <div class="container">
         <div class="footer-inner">
             <div class="footer-left">&copy; 2026 Frontier Automation Systems LLC</div>
-            <div class="footer-center">PolyForm Perimeter License<span class="sep">&middot;</span><a href="mailto:support@clawfactory.app">support@clawfactory.app</a></div>
+            <div class="footer-center">Apache License 2.0<span class="sep">&middot;</span><a href="mailto:support@clawfactory.app">support@clawfactory.app</a></div>
             <div class="footer-right"><a href="https://github.com/BuzzardsBay/clawfactory-site">GitHub &rarr;</a></div>
         </div>
     </div>
