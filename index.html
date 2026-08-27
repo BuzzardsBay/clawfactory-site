@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ClawFactory - OpenClaw, hardened. One click.</title>
-<meta name="description" content="A local AI runtime that doesn't phone home. OpenClaw inside a WSL2 sandbox with egress firewall, loopback-only gateway, and one-click kill switch. Windows 10/11.">
+<meta name="description" content="A local AI runtime that doesn't phone home. OpenClaw inside a WSL2 sandbox with egress firewall, loopback-only gateway, and per-folder file grants. Windows 10/11.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -741,11 +741,11 @@ footer {
     <div class="container">
         <div class="hero-text">
             <h1>OpenClaw. <span class="accent">Hardened.</span><br>One click.</h1>
-            <p class="hero-sub">A local AI runtime that doesn't phone home. ClawFactory installs OpenClaw inside a WSL2 sandbox with an egress firewall, loopback-only gateway, and one-click kill switch. Security controls enforced at the OS level &mdash; not by prompting the agent to behave.</p>
+            <p class="hero-sub">A local AI runtime that doesn't phone home. ClawFactory installs OpenClaw inside a WSL2 sandbox with an egress firewall, loopback-only gateway, and per-folder file grants. Security controls enforced at the OS level &mdash; not by prompting the agent to behave.</p>
             <div class="cta-group">
                 <span class="cta-soon">Launching soon</span>
             </div>
-            <p class="cta-tier-note">ClawAgent: single agent, 5 min setup &middot; ClawFactory: full security substrate, Studio management app, kill switch</p>
+            <p class="cta-tier-note">ClawAgent: single agent, 5 min setup &middot; ClawFactory: full security substrate, Studio management app, approval-gated email</p>
             <div class="hero-meta">
                 <span>Windows 10/11</span> &nbsp;&middot;&nbsp; <span>Free and open source</span>
             </div>
@@ -808,10 +808,6 @@ footer {
                 <tr>
                     <td class="control-name">DPAPI key storage</td>
                     <td class="control-desc">API key stored in Windows Credential Manager, encrypted at rest (DPAPI) under your Windows account</td>
-                </tr>
-                <tr>
-                    <td class="control-name">Kill Switch</td>
-                    <td class="control-desc">One-click shutdown from Start Menu</td>
                 </tr>
                 <tr>
                     <td class="control-name">Web access denied by default</td>
@@ -914,7 +910,17 @@ footer {
                     <span class="faq-chevron">&rsaquo;</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">After install, ClawChat opens automatically. Type your message in the input bar and hit Enter &mdash; the agent responds in real time, streaming tokens as they arrive. Conversations are saved automatically and appear in the sidebar. Use the New Chat button to start a fresh conversation. The gateway status dot in the top-left of ClawChat shows green when your agent is running and ready. If it shows red, use the Kill Switch from the Start Menu to restart the gateway.</div>
+                    <div class="faq-answer-inner">After install, ClawChat opens automatically. Type your message in the input bar and hit Enter &mdash; the agent responds in real time, streaming tokens as they arrive. Conversations are saved automatically and appear in the sidebar. Use the New Chat button to start a fresh conversation. The gateway status dot in the top-left of ClawChat shows green when your agent is running and ready. If it shows red, use the Kill Switch from the Start Menu, then reopen ClawFactory from the desktop icon.</div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question" aria-expanded="false">
+                    <span>What does the Kill Switch actually do?</span>
+                    <span class="faq-chevron">&rsaquo;</span>
+                </button>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">It is an action you take, not a boundary that holds, so it is not listed above as a security control. When you run it from the Start Menu it unmounts your granted folders, attempts to stop the gateway and any running turn, and then counts what is still alive and tells you plainly if it could not stop something. On every release up to v1.4.3 it stopped nothing at all: both of the commands it sent into the sandbox failed on a quoting fault and it reported success anyway. That is fixed in v1.4.4. The fix has been proven on an installed machine by hand, and it has not yet been measured from a clean install, so we describe what it attempts rather than guaranteeing an outcome.</div>
                 </div>
             </div>
 
@@ -934,7 +940,7 @@ footer {
                     <span class="faq-chevron">&rsaquo;</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner"><strong>ClawFactory</strong> is the current product and the one that is maintained. <strong>ClawAgent</strong> is an earlier single-agent build from May 2026. It shares the original substrate (WSL2 sandbox, egress firewall, DPAPI key storage, loopback-only gateway, Kill Switch) but it does <em>not</em> have anything added since: the approval-gated email send, the 30-day recoverable delete, the web access panel, the chat gating proxy, or ClawFactory Studio. If you want the security story described on this page, install ClawFactory.</div>
+                    <div class="faq-answer-inner"><strong>ClawFactory</strong> is the current product and the one that is maintained. <strong>ClawAgent</strong> is an earlier single-agent build from May 2026. It shares the original substrate (WSL2 sandbox, egress firewall, DPAPI key storage, loopback-only gateway) but it does <em>not</em> have anything added since: the approval-gated email send, the 30-day recoverable delete, the web access panel, the chat gating proxy, or ClawFactory Studio. If you want the security story described on this page, install ClawFactory.</div>
                 </div>
             </div>
 
@@ -1011,7 +1017,6 @@ footer {
                     <li class="feature-check">Egress firewall</li>
                     <li class="feature-check">Loopback gateway</li>
                     <li class="feature-check">DPAPI key storage</li>
-                    <li class="feature-check">Kill Switch</li>
                     <li class="feature-cross">Web access denied by default</li>
                     <li class="feature-cross">Approval-gated email</li>
                     <li class="feature-cross">30-day recoverable delete</li>
@@ -1027,7 +1032,6 @@ footer {
                     <li class="feature-check">Egress firewall</li>
                     <li class="feature-check">Loopback gateway</li>
                     <li class="feature-check">DPAPI key storage</li>
-                    <li class="feature-check">Kill Switch</li>
                     <li class="feature-check">Web access denied by default</li>
                     <li class="feature-check">Approval-gated email</li>
                     <li class="feature-check">30-day recoverable delete</li>
