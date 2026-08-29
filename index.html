@@ -280,6 +280,29 @@ nav.scrolled { border-bottom-color: var(--border); }
     max-width: 56ch;
 }
 
+.secondary-link {
+    display: inline-block;
+    font-family: var(--font-head);
+    font-size: 12.5px;
+    color: var(--text-dim);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.secondary-link:hover { color: var(--accent); }
+
+.cta-secondary { margin-top: 10px; }
+
+.step-secondary { margin-top: 10px; }
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.nav-actions .secondary-link { font-size: 12px; }
+
 .hero-meta {
     margin-top: 18px;
     font-family: var(--font-head);
@@ -705,6 +728,7 @@ footer {
     }
     .footer-center, .footer-right { text-align: center; }
     .nav-cta { padding: 8px 12px; font-size: 12px; }
+    .nav-actions .secondary-link { display: none; }
     .wordmark { font-size: 16px; }
 }
 
@@ -720,7 +744,10 @@ footer {
 <nav id="nav">
     <div class="nav-inner">
         <span class="wordmark">ClawFactory</span>
-        <a class="nav-download" href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest">Download</a>
+        <div class="nav-actions">
+            <a class="secondary-link" href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest">Release notes and SHA-256</a>
+            <a class="nav-download" href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest/download/ClawFactory-Secure-Setup.exe">Download</a>
+        </div>
     </div>
 </nav>
 
@@ -730,8 +757,9 @@ footer {
             <h1>OpenClaw. <span class="accent">Hardened.</span><br>One click.</h1>
             <p class="hero-sub">A local AI runtime that doesn't phone home. ClawFactory installs OpenClaw inside a WSL2 sandbox with an egress firewall, loopback-only gateway, and per-folder file grants. Security controls enforced at the OS level &mdash; not by prompting the agent to behave.</p>
             <div class="cta-group">
-                <a class="cta-button-ghost" href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest">Download for Windows</a>
+                <a class="cta-button-ghost" href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest/download/ClawFactory-Secure-Setup.exe">Download for Windows</a>
             </div>
+            <p class="cta-secondary"><a class="secondary-link" href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest">Release notes and SHA-256</a></p>
             <p class="cta-tier-note">Version 1.4.4 &middot; about 440 MB, because the Linux filesystem and the management app are bundled rather than fetched. The release page lists the SHA-256 of the installer so you can check the file you downloaded is the file we built.</p>
             <div class="hero-meta">
                 <span>Windows 10/11</span> &nbsp;&middot;&nbsp; <span>Free and open source</span>
@@ -821,7 +849,8 @@ footer {
             <div class="step">
                 <div class="step-num">Step 01 / Download</div>
                 <div class="step-title">Download</div>
-                <div class="step-desc"><a href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest">Get <code>ClawFactory-Secure-Setup.exe</code> from the releases page</a> and run it as Administrator. The release page lists its SHA-256 so you can check the download.</div>
+                <div class="step-desc"><a href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest/download/ClawFactory-Secure-Setup.exe">Get <code>ClawFactory-Secure-Setup.exe</code></a> and run it as Administrator. The release page lists its SHA-256 so you can check the download.</div>
+                <div class="step-secondary"><a class="secondary-link" href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest">Release notes and SHA-256</a></div>
             </div>
             <div class="step">
                 <div class="step-num">Step 02 / Configure</div>
