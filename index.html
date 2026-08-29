@@ -249,22 +249,7 @@ nav.scrolled { border-bottom-color: var(--border); }
 .cta-button-ghost:hover { background: var(--accent); color: var(--on-accent); }
 .cta-button-ghost:active { background: var(--accent-press); border-color: var(--accent-press); color: var(--on-accent); transform: translateY(1px); }
 
-/* Launching-soon states (non-interactive, accent-styled so they read intentional) */
-.cta-soon {
-    display: inline-block;
-    font-family: var(--font-head);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--accent);
-    background: transparent;
-    padding: 15px 27px;
-    border-radius: 4px;
-    border: 1px solid var(--accent);
-    letter-spacing: -0.01em;
-    cursor: default;
-}
-
-.nav-soon {
+.nav-download {
     font-family: var(--font-head);
     font-size: 13px;
     font-weight: 500;
@@ -273,8 +258,10 @@ nav.scrolled { border-bottom-color: var(--border); }
     padding: 8px 15px;
     border-radius: 4px;
     white-space: nowrap;
-    cursor: default;
+    transition: background 0.15s ease, color 0.15s ease;
 }
+
+.nav-download:hover { background: var(--accent); color: var(--on-accent); }
 
 .products-soon {
     font-family: var(--font-head);
@@ -733,7 +720,7 @@ footer {
 <nav id="nav">
     <div class="nav-inner">
         <span class="wordmark">ClawFactory</span>
-        <span class="nav-soon">Launching soon</span>
+        <a class="nav-download" href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest">Download</a>
     </div>
 </nav>
 
@@ -743,9 +730,9 @@ footer {
             <h1>OpenClaw. <span class="accent">Hardened.</span><br>One click.</h1>
             <p class="hero-sub">A local AI runtime that doesn't phone home. ClawFactory installs OpenClaw inside a WSL2 sandbox with an egress firewall, loopback-only gateway, and per-folder file grants. Security controls enforced at the OS level &mdash; not by prompting the agent to behave.</p>
             <div class="cta-group">
-                <span class="cta-soon">Launching soon</span>
+                <a class="cta-button-ghost" href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest">Download for Windows</a>
             </div>
-            <p class="cta-tier-note">ClawAgent: single agent, 5 min setup &middot; ClawFactory: full security substrate, Studio management app, approval-gated email</p>
+            <p class="cta-tier-note">Version 1.4.4 &middot; about 440 MB, because the Linux filesystem and the management app are bundled rather than fetched. The release page lists the SHA-256 of the installer so you can check the file you downloaded is the file we built.</p>
             <div class="hero-meta">
                 <span>Windows 10/11</span> &nbsp;&middot;&nbsp; <span>Free and open source</span>
             </div>
@@ -834,7 +821,7 @@ footer {
             <div class="step">
                 <div class="step-num">Step 01 / Download</div>
                 <div class="step-title">Download</div>
-                <div class="step-desc">Run <code>ClawFactory-Secure-Setup.exe</code> as Administrator.</div>
+                <div class="step-desc"><a href="https://github.com/BuzzardsBay/clawfactory-secure-setup/releases/latest">Get <code>ClawFactory-Secure-Setup.exe</code> from the releases page</a> and run it as Administrator. The release page lists its SHA-256 so you can check the download.</div>
             </div>
             <div class="step">
                 <div class="step-num">Step 02 / Configure</div>
@@ -844,7 +831,7 @@ footer {
             <div class="step">
                 <div class="step-num">Step 03 / Run</div>
                 <div class="step-title">Run</div>
-                <div class="step-desc">Open <strong>ClawFactory Studio</strong> from the Start Menu. The sandbox runs on your machine, and your agent reads only the folders you grant it. It still talks to the hosted AI model you chose, so anything it can read it can send there.</div>
+                <div class="step-desc">You talk to your agent in <strong>ClawChat</strong>, which the desktop icon opens, and you manage it in <strong>ClawFactory Studio</strong>. In this release four Studio panels are live &mdash; Workspace, Approvals, Web access and Recently deleted &mdash; and seven say on their own page that they are not part of this release. The sandbox runs on your machine and your agent reads only the folders you grant it. It still talks to the hosted AI model you chose, so anything it can read it can send there.</div>
             </div>
         </div>
     </div>
@@ -920,7 +907,7 @@ footer {
                     <span class="faq-chevron">&rsaquo;</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">It is an action you take, not a boundary that holds, so it is not listed above as a security control. When you run it from the Start Menu it unmounts your granted folders, attempts to stop the gateway and any running turn, and then counts what is still alive and tells you plainly if it could not stop something. On every release up to v1.4.3 it stopped nothing at all: both of the commands it sent into the sandbox failed on a quoting fault and it reported success anyway. That is fixed in v1.4.4. The fix has been proven on an installed machine by hand, and it has not yet been measured from a clean install, so we describe what it attempts rather than guaranteeing an outcome.</div>
+                    <div class="faq-answer-inner">It is an action you take, not a boundary that holds, so it is not listed above as a security control. When you run it from the Start Menu it unmounts your granted folders, attempts to stop the gateway and any running turn, and then counts what is still alive and tells you plainly if it could not stop something. On every release up to v1.4.3 it stopped nothing at all: both of the commands it sent into the sandbox failed on a quoting fault and it reported success anyway. That is fixed in v1.4.4, and both halves have now been measured from a clean install: it stopped a running gateway and turn, and with every one of its sandbox calls deliberately made to fail it refused to claim success. It stays off the list above because it is an action rather than a boundary, not because of the evidence behind it.</div>
                 </div>
             </div>
 
@@ -980,7 +967,7 @@ footer {
                     <span class="faq-chevron">&rsaquo;</span>
                 </button>
                 <div class="faq-answer">
-                    <div class="faq-answer-inner">Use <strong>Windows Settings &rarr; Apps &rarr; ClawFactory</strong> (or ClawAgent) <strong>&rarr; Uninstall.</strong> The uninstaller removes the WSL2 environment, the OpenClaw runtime, the firewall rules, and the scheduled task. Your conversation history in <strong>%APPDATA%\ClawChat\</strong> is not deleted automatically &mdash; remove that folder manually if you want a complete clean uninstall.</div>
+                    <div class="faq-answer-inner">Use <strong>Windows Settings &rarr; Apps &rarr; ClawFactory</strong> (or ClawAgent) <strong>&rarr; Uninstall.</strong> ClawFactory is removed either way: the agent, its configuration, the OpenClaw runtime, the firewall rules, the scheduled task, and the sandbox account and its home directory. You are then asked one question, and it is a real choice. <strong>Yes</strong> also unregisters the Ubuntu distro and deletes its disk image, about 6 GB. <strong>No</strong> leaves the now-empty distro registered, so anything else sharing it keeps working and a later reinstall reuses it; its disk image stays on your drive, because the registration points at that file. If the Linux side cannot be cleaned up, the uninstaller says so and names what it left rather than reporting success. Your conversation history in <strong>%APPDATA%\ClawChat\</strong> survives either choice and is never deleted automatically &mdash; remove that folder manually if you want nothing left.</div>
                 </div>
             </div>
 
@@ -1007,11 +994,11 @@ footer {
 <section id="products">
     <div class="container">
         <div class="section-label">Choose Your Product</div>
-        <p class="products-soon">Free and open source, Apache-2.0. <span class="soon-badge">Launching soon.</span></p>
+        <p class="products-soon">Free and open source, Apache-2.0. <span class="soon-badge">ClawFactory v1.4.4 is available now.</span> ClawAgent is shown for comparison only: it is superseded, it is not maintained, and some of the security statements in the files it shipped were wrong even when it was current. Install ClawFactory.</p>
         <div class="product-cards">
             <div class="product-card">
                 <div class="product-title">ClawAgent</div>
-                <div class="product-subtitle">Superseded. Last built May 2026, no longer maintained</div>
+                <div class="product-subtitle">Superseded. Last built May 2026, no longer maintained. Do not rely on any security claim in it</div>
                 <ul class="feature-list">
                     <li class="feature-check">WSL2 sandbox</li>
                     <li class="feature-check">Egress firewall</li>
