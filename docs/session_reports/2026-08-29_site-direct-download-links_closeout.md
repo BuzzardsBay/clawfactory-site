@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-29
 **Repository:** `BuzzardsBay/clawfactory-site` (the repo that serves `clawfactory.app`)
-**Commits:** `142ec82` (the change), plus the commit that adds this file
+**Commits:** `142ec82` (the site change), then three commits to this file alone (see section 9)
 **Status:** COMPLETE. Change is live and verified against the live site.
 **Product repo touched:** NO. `ClawFactory-Secure-Setup` was read only.
 
@@ -301,11 +301,20 @@ are out of scope for this job and are the operator's call.
 
 ## 9. Commits
 
-Two, and the reason there are two rather than one:
+The brief asked for one commit. There are four, and only the first is the site change:
 
-1. `142ec82`, the site change, one commit as the brief specified.
-2. This close-out, which could not be in that commit because it reports readings taken from
-   the live site after that commit was pushed and deployed. A close-out committed before the
+1. `142ec82` **Link the download buttons at the installer, not the release page.** The
+   whole of the requested work, in one commit, as specified. `index.html` only.
+2. `cab6403` **Close-out.** Could not be part of commit 1: it reports readings taken from
+   the live site after commit 1 was pushed and deployed. A close-out written before the
    deploy would have had to claim a result it had not yet measured.
+3. `63e3cda` **Correction to section 8.** The exposure claim in the close-out was written
+   from expectation, then measured, then found half wrong. See section 8.
+4. This commit, correcting this section, which said "two" while standing at four.
 
-Explicit per-file staging both times. No `git add -A`. No tag.
+Commits 2 through 4 touch only this file. `index.html` was written exactly once, and the
+live page has been byte-identical at
+`214db95ad1741fbd8d98d181f96d2863e5256ab00fdfa1e94ddfac6ee6168a76` since commit 1 deployed,
+re-verified after each of the later pushes.
+
+Explicit per-file staging every time. No `git add -A`. No tag.
