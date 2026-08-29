@@ -271,16 +271,33 @@ does not: before this commit the repository tracked exactly four files, `index.h
 The directory was created here anyway, rather than in the product repo, because this job's
 brief explicitly forbids changes to the product repo.
 
-**Consequence worth knowing:** this repository is public and is the Pages source, so this
-file is fetchable under `clawfactory.app/docs/session_reports/`. Everything in it is already
-public: public repo names, public commit hashes, public URLs, and the size of a public
-installer. There are no credentials, hostnames, internal paths or infrastructure details in
-it. It carries no YAML front matter, so Jekyll copies it verbatim without Liquid processing,
-which is the lowest-risk way to add a file to a working Pages site.
+**Consequence, measured rather than predicted.** This repository is public and is the Pages
+source, so this file is served from the marketing domain. After the close-out commit was
+pushed and Pages rebuilt, the exposure was checked directly:
 
-If session reports should not be served from the marketing domain, the fix is a one-line
-`_config.yml` with an `exclude:` entry, or moving these to the product repo. Both are out of
-scope for this job.
+```
+/docs/session_reports/2026-08-29_..._closeout.md     HTTP 200   (byte-identical to the repo file)
+/docs/session_reports/2026-08-29_..._closeout.html   HTTP 200   (22,025 bytes, Jekyll-rendered)
+/docs/                                                HTTP 404
+/docs/session_reports/definitely-not-here.html        HTTP 404   (control, proves the 200s are real)
+```
+
+**Correction to what this section originally said.** It claimed that with no YAML front
+matter Jekyll would copy the file verbatim and not process it. Half right, and the wrong
+half matters: the raw `.md` is indeed served byte-identical, but Jekyll ALSO produced a
+rendered `.html` alongside it. Liquid processing did happen, on a copy. The claim was
+written from expectation and was replaced by measurement. It is left visible here rather
+than quietly edited out, because it is an instance of exactly the failure the citation
+clause exists to catch.
+
+The exposure itself is benign. Everything in this file is already public: public repo
+names, public commit hashes, public URLs, and the size of a public installer. There are no
+credentials, hostnames, internal paths or infrastructure details in it. There is no
+directory index, so the pages are reachable only by exact URL.
+
+If session reports should not be served from the marketing domain at all, the fix is a
+one-line `_config.yml` with an `exclude:` entry, or moving these to the product repo. Both
+are out of scope for this job and are the operator's call.
 
 ## 9. Commits
 
