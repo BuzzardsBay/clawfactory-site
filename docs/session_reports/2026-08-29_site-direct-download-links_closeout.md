@@ -2,7 +2,7 @@
 
 **Date:** 2026-08-29
 **Repository:** `BuzzardsBay/clawfactory-site` (the repo that serves `clawfactory.app`)
-**Commits:** `142ec82` (the site change), then three commits to this file alone (see section 9)
+**Commits:** `142ec82` (the site change) and `e00059f` (`_config.yml`); the rest touch only this file (see section 9)
 **Status:** COMPLETE. Change is live and verified against the live site.
 **Product repo touched:** NO. `ClawFactory-Secure-Setup` was read only.
 
@@ -290,18 +290,51 @@ written from expectation and was replaced by measurement. It is left visible her
 than quietly edited out, because it is an instance of exactly the failure the citation
 clause exists to catch.
 
-The exposure itself is benign. Everything in this file is already public: public repo
+The exposure itself was benign. Everything in this file is already public: public repo
 names, public commit hashes, public URLs, and the size of a public installer. There are no
-credentials, hostnames, internal paths or infrastructure details in it. There is no
-directory index, so the pages are reachable only by exact URL.
+credentials, hostnames, internal paths or infrastructure details in it. There was no
+directory index, so the pages were reachable only by exact URL.
 
-If session reports should not be served from the marketing domain at all, the fix is a
-one-line `_config.yml` with an `exclude:` entry, or moving these to the product repo. Both
-are out of scope for this job and are the operator's call.
+**RESOLVED. The operator asked for it off the marketing domain, and it is off.** Commit
+`e00059f` adds `_config.yml`, the first Jekyll config this repository has ever had,
+excluding `docs/`.
+
+Two notes on that file, both of which will matter to whoever edits it next:
+
+- **`exclude` REPLACES Jekyll's default exclude list, it does not extend it.** So the
+  defaults (`.sass-cache/`, `.jekyll-cache/`, `Gemfile`, `node_modules/`, the `vendor/`
+  entries) are repeated in the file. Add to that list. Never overwrite it.
+- **`index.html` carries no YAML front matter**, so Jekyll treats it as a static file and
+  copies it verbatim. Introducing a config could not start it being processed. This was
+  checked before the config was written, and the served bytes were checked again after.
+
+Measured after the Pages build completed at `e00059f`:
+
+```
+/                                                     HTTP 200   sha256 214db95a...  (unchanged)
+/docs/session_reports/2026-08-29_..._closeout.md      HTTP 404   (was 200)
+/docs/session_reports/2026-08-29_..._closeout.html    HTTP 404   (was 200)
+/docs/                                                HTTP 404
+/_config.yml                                          HTTP 404   (the config is not itself served)
+/definitely-not-here.html                             HTTP 404   (control)
+```
+
+The two 404s are load-bearing because the same two URLs returned 200 twenty minutes
+earlier, in this same session, recorded above. That is a before-and-after on the real
+target, which is stronger evidence than a synthetic canary would have been. The live
+`index.html` is byte-identical to what it was before the config existed, and all six
+download links were re-extracted from those bytes and are still correct: three direct, three
+to the release page.
+
+**Still served, deliberately left alone:** `/README.md` returns 200 as a raw file. It is not
+rendered to HTML (`/README.html` is 404). That is the repository's own README, it is
+ordinary for a public repo, it contains nothing sensitive, and removing it was not asked
+for. If it should also go, add `README.md` to the `exclude` list.
 
 ## 9. Commits
 
-The brief asked for one commit. There are four, and only the first is the site change:
+The brief asked for one commit for the site change, and got one. The rest are the close-out
+and a follow-on the operator asked for after reading it:
 
 1. `142ec82` **Link the download buttons at the installer, not the release page.** The
    whole of the requested work, in one commit, as specified. `index.html` only.
@@ -310,11 +343,15 @@ The brief asked for one commit. There are four, and only the first is the site c
    deploy would have had to claim a result it had not yet measured.
 3. `63e3cda` **Correction to section 8.** The exposure claim in the close-out was written
    from expectation, then measured, then found half wrong. See section 8.
-4. This commit, correcting this section, which said "two" while standing at four.
+4. `53811a8` **Correction to this section**, which said "two" while standing at four.
+5. `e00059f` **`_config.yml`, excluding `docs/` from the published site.** Requested by the
+   operator after reading section 8. This is the only commit other than 1 that changes what
+   the site serves.
+6. This commit, recording the measured result of commit 5 in section 8.
 
-Commits 2 through 4 touch only this file. `index.html` was written exactly once, and the
-live page has been byte-identical at
+`index.html` was written exactly once, in commit 1. Everything after it touches only this
+file and `_config.yml`. The live page has been byte-identical at
 `214db95ad1741fbd8d98d181f96d2863e5256ab00fdfa1e94ddfac6ee6168a76` since commit 1 deployed,
-re-verified after each of the later pushes.
+re-verified after every later push including the config change.
 
 Explicit per-file staging every time. No `git add -A`. No tag.
