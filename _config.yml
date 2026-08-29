@@ -1,0 +1,20 @@
+# GitHub Pages / Jekyll configuration for clawfactory.app
+#
+# This file exists for one reason: to keep engineering session reports out of
+# the published site. Without it, every .md file in the repo is both copied
+# verbatim AND rendered to .html under clawfactory.app.
+#
+# `exclude` REPLACES Jekyll's default exclude list rather than adding to it,
+# so the defaults are repeated here. Add to this list, never overwrite it.
+exclude:
+  - docs/
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - Gemfile
+  - Gemfile.lock
+  - node_modules/
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
